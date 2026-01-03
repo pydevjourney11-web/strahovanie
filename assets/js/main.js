@@ -44,6 +44,38 @@
     link.setAttribute("href", config.WHITE_LABEL_URL);
   };
 
+  const initSeoRuntimeFixes = () => {
+    try {
+      const isHttp = location && (location.protocol === "http:" || location.protocol === "https:");
+      if (!isHttp) return;
+
+      const canonicalUrl = `${location.origin}${location.pathname.replace(/index\.html$/i, "")}`;
+      const canonical = document.querySelector('link[rel="canonical"]');
+      if (canonical && canonicalUrl) canonical.setAttribute("href", canonicalUrl);
+
+      const ogUrl = document.querySelector('meta[property="og:url"]');
+      if (ogUrl) ogUrl.setAttribute("content", canonicalUrl);
+
+      const defaultOgImage = `${location.origin}/og.jpg`;
+      const ogImage = document.querySelector('meta[property="og:image"]');
+      const twitterImage = document.querySelector('meta[name="twitter:image"]');
+
+      const hasOgImage = ogImage && String(ogImage.getAttribute("content") || "").trim();
+      const hasTwitterImage = twitterImage && String(twitterImage.getAttribute("content") || "").trim();
+
+      if (ogImage && !hasOgImage) ogImage.setAttribute("content", defaultOgImage);
+      if (twitterImage && !hasTwitterImage) twitterImage.setAttribute("content", defaultOgImage);
+
+      const ld = document.querySelector('script[type="application/ld+json"]');
+      if (ld && ld.textContent) {
+        ld.textContent = ld.textContent
+          .replaceAll("https://example.com/", canonicalUrl)
+          .replaceAll("https://example.com/og.jpg", defaultOgImage);
+      }
+    } catch (_) {
+    }
+  };
+
   const getProduct = () => {
     const saved = (localStorage.getItem(PRODUCT_KEY) || "").toUpperCase();
     return saved === "КАСКО" ? "КАСКО" : "ОСАГО";
@@ -322,6 +354,7 @@
   };
 
   document.addEventListener("DOMContentLoaded", () => {
+    initSeoRuntimeFixes();
     initMetrika();
     initProductToggle();
     initMobileNav();

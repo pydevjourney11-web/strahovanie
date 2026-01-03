@@ -464,6 +464,9 @@ input:focus,textarea:focus{border-color:rgba(0,0,0,.60)}
   border-color:#000 !important;
 }
 
+.wl-widget{width:100%}
+.wl-widget iframe{width:100% !important;max-width:100% !important;border:0}
+
 .polis812-widget svg,
 .polis812-widget svg *{
   fill:#000 !important;
