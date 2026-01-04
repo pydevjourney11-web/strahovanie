@@ -144,6 +144,58 @@
     });
   };
 
+  const initPrivacyModal = () => {
+    const modal = document.querySelector("[data-privacy-modal]");
+    const openBtn = document.querySelector("[data-privacy-open]");
+    const closeEls = Array.from(document.querySelectorAll("[data-privacy-close]"));
+    const confirmBtn = document.querySelector("[data-privacy-confirm]");
+    const readCheckbox = document.querySelector("[data-privacy-read]");
+
+    if (!modal || !openBtn || !confirmBtn || !readCheckbox) return;
+
+    const open = () => {
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    };
+
+    const close = () => {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      readCheckbox.checked = false;
+      confirmBtn.disabled = true;
+    };
+
+    openBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      open();
+    });
+
+    closeEls.forEach((el) => el.addEventListener("click", close));
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) close();
+    });
+
+    readCheckbox.addEventListener("change", () => {
+      confirmBtn.disabled = !readCheckbox.checked;
+    });
+
+    confirmBtn.addEventListener("click", () => {
+      if (readCheckbox.checked) {
+        reachGoal("privacy_read");
+        close();
+      }
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("is-open")) {
+        close();
+      }
+    });
+  };
+
   const initActiveNav = () => {
     const links = Array.from(document.querySelectorAll('a.nav-link[href^="#"]'));
     if (!links.length) return;
@@ -283,6 +335,7 @@
     initMetrika();
     initProductToggle();
     initSmoothAnchors();
+    initPrivacyModal();
     initForms();
   });
 })();
