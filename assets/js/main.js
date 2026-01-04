@@ -37,13 +37,6 @@
     }
   };
 
-  const initWhiteLabelLink = () => {
-    const link = document.getElementById("white-label-link");
-    if (!link) return;
-    if (!config.WHITE_LABEL_URL) return;
-    link.setAttribute("href", config.WHITE_LABEL_URL);
-  };
-
   const initSeoRuntimeFixes = () => {
     try {
       const isHttp = location && (location.protocol === "http:" || location.protocol === "https:");
@@ -226,74 +219,6 @@
     });
   };
 
-  const initFaqAccordion = () => {
-    const items = Array.from(document.querySelectorAll("details.faq-item"));
-    if (!items.length) return;
-
-    items.forEach((item) => {
-      item.addEventListener("toggle", () => {
-        if (!item.open) return;
-        items.forEach((other) => {
-          if (other !== item) other.open = false;
-        });
-      });
-    });
-  };
-
-  const initPolis812BlackTheme = () => {
-    const container = document.querySelector(".polis812-widget");
-    if (!container) return;
-
-    const css = `
-      :host, :root, * {
-        color: #000 !important;
-        border-color: #000 !important;
-      }
-      svg, svg * {
-        fill: #000 !important;
-        stroke: #000 !important;
-      }
-      input, textarea, select, button, [role="button"] {
-        color: #000 !important;
-        background: #fff !important;
-        border-color: #000 !important;
-      }
-      a { color: #000 !important; }
-    `;
-
-    const inject = (root) => {
-      if (!root) return;
-      try {
-        if (root.__polis812BlackInjected) return;
-        const style = document.createElement("style");
-        style.setAttribute("data-polis812-black", "true");
-        style.textContent = css;
-        root.appendChild(style);
-        root.__polis812BlackInjected = true;
-      } catch (_) {
-      }
-    };
-
-    const walkShadow = (node) => {
-      if (!node || !(node instanceof Element)) return;
-      if (node.shadowRoot) inject(node.shadowRoot);
-      node.querySelectorAll("*").forEach((el) => {
-        if (el.shadowRoot) inject(el.shadowRoot);
-      });
-    };
-
-    walkShadow(container);
-
-    const mo = new MutationObserver(() => {
-      walkShadow(container);
-    });
-
-    mo.observe(container, {
-      childList: true,
-      subtree: true
-    });
-  };
-
   const validatePhone = (value) => {
     const v = (value || "").trim();
     if (!v) return false;
@@ -357,12 +282,7 @@
     initSeoRuntimeFixes();
     initMetrika();
     initProductToggle();
-    initMobileNav();
-    initActiveNav();
     initSmoothAnchors();
     initForms();
-    initWhiteLabelLink();
-    initFaqAccordion();
-    initPolis812BlackTheme();
   });
 })();

@@ -67,6 +67,7 @@ img{max-width:100%;display:block}
   align-items:center;
   justify-content:space-between;
   gap:16px;
+  flex-wrap:wrap;
   padding:14px 0;
 }
 
@@ -77,13 +78,19 @@ img{max-width:100%;display:block}
   min-width:max-content;
 }
 .brand-badge{
-  width:38px;
-  height:38px;
-  border-radius:12px;
-  display:grid;
-  place-items:center;
-  background:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:transparent;
+  border-radius:10px;
+  overflow:hidden;
   box-shadow:none;
+}
+.brand-logo{
+  height:34px;
+  width:auto;
+  display:block;
+  object-fit:contain;
 }
 .brand-name{
   font-weight:700;
@@ -95,6 +102,27 @@ img{max-width:100%;display:block}
   color:var(--muted);
   margin-top:2px;
 }
+
+.header-icons{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.header-icon{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:transparent;
+  display:grid;
+  place-items:center;
+  color:var(--text);
+}
+
+.header-icon:hover{background:rgba(0,0,0,.04)}
+
+.header-icon svg{width:20px;height:20px}
 
 .nav-toggle{
   display:none;
@@ -112,6 +140,7 @@ img{max-width:100%;display:block}
   display:flex;
   align-items:center;
   gap:14px;
+  justify-content:center;
 }
 .site-nav ul{
   display:flex;
@@ -223,6 +252,13 @@ h1{
   flex-wrap:wrap;
 }
 
+.hero-links{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
 .section-label{
   font-size:12px;
   font-weight:700;
@@ -330,14 +366,6 @@ h1{
 
 .split{display:grid;grid-template-columns:1fr;gap:14px}
 
-.ad-slot{
-  border:1px dashed rgba(0,0,0,.30);
-  border-radius:var(--radius);
-  background:transparent;
-  padding:20px;
-  color:var(--muted);
-}
-
 .form{
   display:grid;
   gap:12px;
@@ -398,24 +426,19 @@ input:focus,textarea:focus{border-color:rgba(0,0,0,.60)}
   .page-section .container{width:min(860px, calc(100% - 32px))}
   .page-section{min-height:auto;padding:68px 0}
   .page-section:first-of-type{padding-top:86px}
+  .brand-logo{height:30px}
+  .header-icon{width:42px;height:42px;border-radius:14px}
+  .site-nav{
+    order:3;
+    width:100%;
+    justify-content:flex-start;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .site-nav ul{flex-wrap:nowrap}
+  .site-nav a.nav-link{white-space:nowrap}
   .step-icon{width:34px;height:34px;border-radius:12px}
   .step-text{font-size:15px}
-  .nav-toggle{display:inline-flex}
-  .site-nav{
-    position:fixed;
-    inset:64px 16px auto 16px;
-    background:rgba(255,255,255,.96);
-    border:1px solid var(--border);
-    border-radius:18px;
-    box-shadow:var(--shadow);
-    padding:12px;
-    display:none;
-    flex-direction:column;
-    align-items:stretch;
-  }
-  .site-nav.is-open{display:flex}
-  .site-nav ul{flex-direction:column;align-items:stretch}
-  .site-nav a.nav-link{justify-content:space-between;width:100%}
 }
 
 .stack{display:grid;gap:20px}
@@ -437,14 +460,6 @@ input:focus,textarea:focus{border-color:rgba(0,0,0,.60)}
 
 .benefit-icon svg{width:18px;height:18px}
 
-.faq{border-top:1px solid var(--border)}
-.faq-item{border-bottom:1px solid var(--border);padding:14px 0}
-.faq-item summary{list-style:none;cursor:pointer;font-weight:700;position:relative;padding-right:28px}
-.faq-item summary::-webkit-details-marker{display:none}
-.faq-item summary::after{content:"";position:absolute;right:0;top:50%;width:10px;height:10px;border-right:2px solid var(--text);border-bottom:2px solid var(--text);transform:translateY(-65%) rotate(45deg)}
-.faq-item[open] summary::after{transform:translateY(-35%) rotate(-135deg)}
-.faq-body{color:var(--muted);padding:10px 0 0}
-
 .messengers{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
 .messenger{
   width:54px;
@@ -458,29 +473,5 @@ input:focus,textarea:focus{border-color:rgba(0,0,0,.60)}
 .messenger:hover{background:rgba(0,0,0,.04)}
 .messenger svg{width:22px;height:22px}
 
-.polis812-widget,
-.polis812-widget *{
-  color:#000 !important;
-  border-color:#000 !important;
-}
-
 .wl-widget{width:100%}
 .wl-widget iframe{width:100% !important;max-width:100% !important;border:0}
-
-.polis812-widget svg,
-.polis812-widget svg *{
-  fill:#000 !important;
-  stroke:#000 !important;
-}
-
-.polis812-widget input,
-.polis812-widget textarea,
-.polis812-widget select,
-.polis812-widget button,
-.polis812-widget [role="button"]{
-  color:#000 !important;
-  background:#fff !important;
-  border-color:#000 !important;
-}
-
-.polis812-widget a{color:#000 !important}
